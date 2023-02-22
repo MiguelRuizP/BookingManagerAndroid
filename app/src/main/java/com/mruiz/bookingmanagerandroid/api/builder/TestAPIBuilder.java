@@ -1,12 +1,6 @@
 package com.mruiz.bookingmanagerandroid.api.builder;
 
 import com.mruiz.bookingmanagerandroid.api.TestAPI;
-import com.mruiz.bookingmanagerandroid.payload.SimpleMessageDto;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class TestAPIBuilder{
 
@@ -19,15 +13,6 @@ public class TestAPIBuilder{
     }
 
     public String test(){
-        Call<SimpleMessageDto> call = testAPI.test(apiBuilder.getToken());
-        try {
-            Response<SimpleMessageDto> response = call.execute();
-            if(response.isSuccessful()){
-                return response.body().getMessage();
-            }
-        } catch (IOException e) {
-
-        }
-        return null;
+        return apiBuilder.getBody(testAPI.test(apiBuilder.getToken())).getMessage();
     }
 }

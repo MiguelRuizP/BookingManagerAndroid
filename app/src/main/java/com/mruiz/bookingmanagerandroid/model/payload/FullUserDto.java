@@ -1,4 +1,4 @@
-package com.mruiz.bookingmanagerandroid.payload;
+package com.mruiz.bookingmanagerandroid.model.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

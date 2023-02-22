@@ -30,7 +30,7 @@ public class RegisterActivity  extends AppCompatActivity {
             String password = passwordEditText.getText().toString();
 
             new Thread(() -> {
-                APIBuilder apiBuilder = new APIBuilder(Constants.IP);
+                APIBuilder apiBuilder = new APIBuilder();
                 int requestStatus = apiBuilder.register(username, email, password);
 
                 this.runOnUiThread(() -> {

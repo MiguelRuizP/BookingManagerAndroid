@@ -4,9 +4,10 @@ import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mruiz.bookingmanagerandroid.Constants;
 import com.mruiz.bookingmanagerandroid.api.AuthAPI;
-import com.mruiz.bookingmanagerandroid.payload.FullUserDto;
-import com.mruiz.bookingmanagerandroid.payload.SimpleMessageDto;
+import com.mruiz.bookingmanagerandroid.model.payload.FullUserDto;
+import com.mruiz.bookingmanagerandroid.model.payload.SimpleMessageDto;
 
 import java.io.IOException;
 
@@ -17,32 +18,31 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIBuilder {
+
+    public static APIBuilder publicBuilder;
     @Getter
     private Retrofit retrofit;
     private AuthAPI authAPI;
     @Getter
     private String token;
 
-    public APIBuilder(String baseURL){
+    public APIBuilder(){
         Gson gson = new GsonBuilder()
+//                .setDateFormat("yyyy-MM-dd hh:mm:ss")
                 .setLenient()
                 .create();
-        retrofit = new Retrofit.Builder().baseUrl(baseURL)
+        retrofit = new Retrofit.Builder().baseUrl(Constants.IP)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         authAPI = retrofit.create(AuthAPI.class);
     }
 
     public int login(String username, String password) {
-        Call<SimpleMessageDto> call = authAPI.token(encodeLoginHeader(username, password));
-        Response<SimpleMessageDto> response = null;
-        try {
-            response = call.execute();
-            if(response.isSuccessful()){
-                token = "Bearer " + response.body().getMessage();
-            }
+        try{
+            Response<SimpleMessageDto> response = getResponse(authAPI.token(encodeLoginHeader(username, password)));
+            token = "Bearer " + response.body().getMessage();
             return response.code();
-        } catch (IOException e) {
+        } catch (Exception ex) {
             return 0;
         }
     }
@@ -54,11 +54,33 @@ public class APIBuilder {
 
     public int register(String username, String email, String password){
         FullUserDto userDto = new FullUserDto(username, email, password);
-        Call<SimpleMessageDto> call = authAPI.register(userDto);
         try {
-            return call.execute().code();
-        } catch (IOException e) {
+            return getResponse(authAPI.register(userDto)).code();
+        } catch (Exception ex) {
             return 0;
+        }
+    }
+
+    public <T> Response<T> getResponse(Call<T> call){
+        try{
+            Response<T> response = call.execute();
+            if(response.isSuccessful()){
+                return response;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        return null;
+    }
+
+    public <T> T getBody(Call<T> call) {
+        Response<T> response = getResponse(call);
+        if(response != null) {
+            return response.body();
+        } else {
+            return null;
         }
     }
 

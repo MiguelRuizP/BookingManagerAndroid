@@ -1,5 +1,6 @@
 package com.mruiz.bookingmanagerandroid.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mruiz.bookingmanagerandroid.Constants;
 import com.mruiz.bookingmanagerandroid.R;
 import com.mruiz.bookingmanagerandroid.api.builder.APIBuilder;
-import com.mruiz.bookingmanagerandroid.api.builder.TestAPIBuilder;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,12 +29,16 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString();
 
             new Thread(() -> {
-                APIBuilder apiBuilder = new APIBuilder(Constants.IP);
+                APIBuilder apiBuilder = new APIBuilder();
                 int loginStatus = apiBuilder.login(username, password);
 
                 this.runOnUiThread(() -> {
                     if(loginStatus == 200){
                         Toast.makeText(getApplicationContext(),username + " logeado con éxito",Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(this.getApplicationContext(), BookingListActivity.class);
+                        APIBuilder.publicBuilder = apiBuilder;
+                        startActivity(intent);
                     } else if(loginStatus >= 400 && loginStatus < 500){
                         Toast.makeText(getApplicationContext(),username + " no autorizado",Toast.LENGTH_SHORT).show();
                     } else {

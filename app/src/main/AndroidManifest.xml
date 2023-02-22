@@ -29,6 +29,9 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:exported="true"/>
+        <activity
+            android:name=".activity.BookingListActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

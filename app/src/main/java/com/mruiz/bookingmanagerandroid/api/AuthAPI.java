@@ -1,7 +1,7 @@
 package com.mruiz.bookingmanagerandroid.api;
 
-import com.mruiz.bookingmanagerandroid.payload.FullUserDto;
-import com.mruiz.bookingmanagerandroid.payload.SimpleMessageDto;
+import com.mruiz.bookingmanagerandroid.model.payload.FullUserDto;
+import com.mruiz.bookingmanagerandroid.model.payload.SimpleMessageDto;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
