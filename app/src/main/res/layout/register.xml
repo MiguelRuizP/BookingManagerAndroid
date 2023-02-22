@@ -6,17 +6,20 @@
     android:layout_height="match_parent">
     <EditText
         android:id="@+id/username"
-        android:layout_width="80pt"
-        android:layout_height="20dp"/>
+        android:layout_width="120pt"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"/>
     <EditText
         android:id="@+id/email"
-        android:layout_width="80pt"
-        android:layout_height="20dp"/>
+        android:layout_width="120pt"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"/>
+
     <EditText
         android:id="@+id/password"
-        android:inputType="textPassword"
-        android:layout_width="80pt"
-        android:layout_height="20dp"/>
+        android:layout_width="120pt"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword" />
     <Button
         android:id="@+id/registerbutton"
         android:text="@string/register"

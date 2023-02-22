@@ -7,17 +7,20 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="80pt"
-        android:layout_height="20dp" />
+        android:layout_width="120pt"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"/>
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="80pt"
-        android:layout_height="20dp"
+        android:layout_width="120pt"
+        android:layout_height="wrap_content"
         android:inputType="textPassword" />
+
     <Button
         android:id="@+id/loginbutton"
         android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
 </LinearLayout>
