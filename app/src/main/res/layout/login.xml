@@ -7,12 +7,16 @@
 
     <EditText
         android:id="@+id/username"
+        android:maxLength="25"
+        android:hint="@string/username"
         android:layout_width="120pt"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"/>
 
     <EditText
         android:id="@+id/password"
+        android:maxLength="30"
+        android:hint="@string/password"
         android:layout_width="120pt"
         android:layout_height="wrap_content"
         android:inputType="textPassword" />

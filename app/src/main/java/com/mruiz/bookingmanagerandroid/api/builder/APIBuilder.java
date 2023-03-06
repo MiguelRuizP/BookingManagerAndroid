@@ -28,23 +28,25 @@ public class APIBuilder {
 
     public APIBuilder(){
         Gson gson = new GsonBuilder()
-//                .setDateFormat("yyyy-MM-dd hh:mm:ss")
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .setLenient()
                 .create();
         retrofit = new Retrofit.Builder().baseUrl(Constants.IP)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         authAPI = retrofit.create(AuthAPI.class);
     }
 
     public int login(String username, String password) {
+        int code = 0;
         try{
             Response<SimpleMessageDto> response = getResponse(authAPI.token(encodeLoginHeader(username, password)));
+            code = response.code();
             token = "Bearer " + response.body().getMessage();
-            return response.code();
         } catch (Exception ex) {
-            return 0;
+
         }
+        return code;
     }
 
     private String encodeLoginHeader(String username, String password){
@@ -64,9 +66,7 @@ public class APIBuilder {
     public <T> Response<T> getResponse(Call<T> call){
         try{
             Response<T> response = call.execute();
-            if(response.isSuccessful()){
-                return response;
-            }
+            return response;
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (Throwable t) {

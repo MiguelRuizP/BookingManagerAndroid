@@ -34,15 +34,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 this.runOnUiThread(() -> {
                     if(loginStatus == 200){
-                        Toast.makeText(getApplicationContext(),username + " logeado con éxito",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Welcome, " + username + "!",Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(this.getApplicationContext(), BookingListActivity.class);
                         APIBuilder.publicBuilder = apiBuilder;
                         startActivity(intent);
                     } else if(loginStatus >= 400 && loginStatus < 500){
-                        Toast.makeText(getApplicationContext(),username + " no autorizado",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),username + " unauthorized",Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Error de conexión con el servidor",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Server connection error",Toast.LENGTH_SHORT).show();
                     }
                 });
 

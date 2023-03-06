@@ -29,22 +29,24 @@ public class RegisterActivity  extends AppCompatActivity {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            new Thread(() -> {
-                APIBuilder apiBuilder = new APIBuilder();
-                int requestStatus = apiBuilder.register(username, email, password);
+            if(username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(getApplicationContext(),"You must complete all fields",Toast.LENGTH_SHORT).show();
+            } else {
+                new Thread(() -> {
+                    APIBuilder apiBuilder = new APIBuilder();
+                    int requestStatus = apiBuilder.register(username, email, password);
 
-                this.runOnUiThread(() -> {
-                    if(requestStatus == 200){
-                        Toast.makeText(getApplicationContext(),username + " registrado con éxito",Toast.LENGTH_SHORT).show();
-                    } else if(requestStatus >= 400 && requestStatus < 500){
-                        Toast.makeText(getApplicationContext(), "No se ha podido registrar a " + username,Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Error de conexión con el servidor",Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }).start();
-
+                    this.runOnUiThread(() -> {
+                        if(requestStatus == 200){
+                            Toast.makeText(getApplicationContext(),username + " registered successfully!",Toast.LENGTH_SHORT).show();
+                        } else if(requestStatus >= 400 && requestStatus < 500){
+                            Toast.makeText(getApplicationContext(), "Couldn't register. Try changing user/email",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Server connection error",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).start();
+            }
         });
     }
 }
